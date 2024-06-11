@@ -9,13 +9,15 @@ import { getFirestore } from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB2JBncb80XZheIUE866s8m7YY7_rC_l2Q",
+  apiKey: import.meta.env.VITE_API_KEY_FIREBASE,
   authDomain: "journalist-4be02.firebaseapp.com",
   projectId: "journalist-4be02",
   storageBucket: "journalist-4be02.appspot.com",
   messagingSenderId: "303103157373",
   appId: "1:303103157373:web:bc5127d265ed07bcf9bd14",
 };
+
+
 
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
