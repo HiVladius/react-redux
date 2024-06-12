@@ -13,6 +13,7 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     for (const formValue of Object.keys(formValidation)) {
       if (formValidation[formValue] !== null) return false;
     }
+    return true;
   }, [formValidation]);
 
   //? onInputChange es una función que se ejecuta cada vez que se actualiza
@@ -33,17 +34,19 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
   //? se actualiza el formulario
 
   const createValidators = () => {
-    const formCheckValius = {};
+
+    const formCheckValues = {};
 
     for (const formField of Object.keys(formValidations)) {
       const [fn, errorMessage] = formValidations[formField];
-      formCheckValius[`${formField}Valid`] = fn(formState[formField])
+      
+      formCheckValues[`${formField}Valid`] = fn(formState[formField])
         ? null
         : errorMessage;
     }
 
-    setformValidation(formCheckValius);
-    // console.log(formCheckValius);
+    setformValidation(formCheckValues);
+    // console.log(formCheckValues);
   };
 
   return {

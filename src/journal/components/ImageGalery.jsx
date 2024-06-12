@@ -7,7 +7,7 @@ const personajes = () => {
     .catch((error) => console.log(error));
 };
 
-console.log(personajes());
+// console.log(personajes());
 
 export const ImageGalery = () => {
   return (

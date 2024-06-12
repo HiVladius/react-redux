@@ -6,27 +6,25 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-import { startCreatingWithEmailPassword } from "../../store/auth/thunks";
+import { startCreatingWithEmailPassword } from "../../store/auth/";
 
 const formData = {
   name: "Tu nombre completo",
   email: "correo@correo.com",
   password: "123456",
-  samePassword: "123456",
+
   displayName: "Tu nombre completo",
 };
 
 const formValidations = {
   email: [(value) => value.includes("@"), 'El correo debe tener un "@"'],
+
   password: [
     (value) => value.length >= 6,
     "La contraseña debe tener al menos 6 caracteres",
   ],
-  samePassword: [
-    (value) => value === formData.password,
-    "Las contraseñas no coinciden",
-  ],
-  displayName: [(value) => value.trim().length > 0, "El nombre es obligatorio"],
+
+  displayName: [(value) => value.length >= 1, "El nombre es obligatorio."],
 };
 
 export const RegisterPage = () => {
@@ -36,42 +34,38 @@ export const RegisterPage = () => {
 
   const {
     formState,
-    name,
+    displayName,
     email,
     password,
-    samePassword,
-    displayName,
     onInputChange,
-    onResetForm,
     isFormValid,
     displayNameValid,
     emailValid,
     passwordValid,
-    samePasswordValid,
   } = useForm(formData, formValidations);
 
-  const onSubmit = (event) => {
+  const onSubmit = ( event ) => {
     event.preventDefault();
-
     setFormSubmitted(true);
-    if (!isFormValid) return;
 
-    dispatch(startCreatingWithEmailPassword(formState));
-  };
+    if ( !isFormValid ) return;
+
+    dispatch( startCreatingWithEmailPassword(formState) );
+  }
 
   return (
-    <>
-      <AuthLayout title="Register ⚒️ ">
-        <h1>FormValid {isFormValid ? "Valido" : "Incorrecto"} </h1>
-        <form onSubmit={onSubmit}>
-          <Grid container>
-            {/* Aquí van los campos de texto */}
 
+      <AuthLayout title="Crear cuenta">
+        <form
+          onSubmit={onSubmit}
+          className="animate__animated animate__fadeIn animate__faster"
+        >
+          <Grid container>
             <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField
                 label="Nombre completo"
                 type="text"
-                placeholder="Ej. Juan Pérez"
+                placeholder="Nombre completo"
                 fullWidth
                 name="displayName"
                 value={displayName}
@@ -85,7 +79,7 @@ export const RegisterPage = () => {
               <TextField
                 label="Correo"
                 type="email"
-                placeholder="correo@correo.com"
+                placeholder="correo@google.com"
                 fullWidth
                 name="email"
                 value={email}
@@ -95,11 +89,11 @@ export const RegisterPage = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sx={{ mt: 4 }}>
+            <Grid item xs={12} sx={{ mt: 2 }}>
               <TextField
                 label="Contraseña"
                 type="password"
-                variant="outlined"
+                placeholder="Contraseña"
                 fullWidth
                 name="password"
                 value={password}
@@ -109,43 +103,32 @@ export const RegisterPage = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sx={{ mt: 2 }}>
-              <TextField
-                label="Verifica tu contraseña"
-                type="password"
-                variant="outlined"
-                fullWidth
-                name="samePassword"
-                value={samePassword}
-                onChange={onInputChange}
-                error={!!samePasswordValid && formSubmitted}
-                helperText={samePasswordValid}
-              />
-            </Grid>
+            <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+              <Grid item xs={12} >
+                
+              </Grid>
 
-            {/*  Aquí va el botón de crear una cuenta */}
-            <Grid container spacing={2} sx={{ mb: 2, mt: 2 }}>
               <Grid item xs={12}>
-                <Button type="submit" variant="contained" fullWidth>
-                   Crear cuenta
+                <Button
+                  // disabled={isCheckingAuthentication}
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                >
+                  Crear cuenta
                 </Button>
               </Grid>
             </Grid>
 
-            <Grid container direction={"row"} justifyContent={"end"}>
-              <Typography sx={{ mr: 2 }}>¿Ya tienes cuenta?</Typography>
-              <Link
-                component={RouterLink}
-                to="/auth/login"
-                color="inherit"
-                sx={{ mt: 2 }}
-              >
-                Ingresar
+            <Grid container direction="row" justifyContent="end">
+              <Typography sx={{ mr: 1 }}>¿Ya tienes cuenta?</Typography>
+              <Link component={RouterLink} color="inherit" to="/auth/login">
+                ingresar
               </Link>
             </Grid>
           </Grid>
         </form>
       </AuthLayout>
-    </>
+    
   );
 };

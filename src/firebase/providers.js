@@ -1,4 +1,8 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider();
@@ -16,33 +20,46 @@ export const singInWithGoogle = async () => {
       uid,
     };
   } catch (error) {
-    
     const errorCode = error.code;
     const errorMessage = error.message;
-   
 
     return {
       ok: false,
-        error, 
-        errorCode,
-        errorMessage,
-       
+
+      errorMessage,
     };
   }
 };
 
+export const registerWithEmailPassword = async ({
+  email,
+  password,
+  displayName,
+}) => {
+  console.log(email, password, displayName);
 
-export const registerWithEmailPassword = async ({email, password, displayName}) => {
+
   try {
+    const resp = await createUserWithEmailAndPassword(
+      FirebaseAuth,
+      email,
+      password
+    );
 
-    
-    const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
-    const {uid, photoURL} = resp.user;
+    const { uid, photoURL } = resp.user;
     console.log(resp);
 
+    return {
+      ok: true,
+      displayName,
+      email,
+      photoURL,
+      uid,
+    };
 
-  }catch (error){
-    console.log(error);
-    return {ok: false, errorMessage: error.message}
+    
+  } catch (error) {
+    console.log("Error al registrar con email y contraseña", error.message);
+    return { ok: false, errorMessage: error.message };
   }
 };
