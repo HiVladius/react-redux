@@ -2,6 +2,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
@@ -47,7 +48,8 @@ export const registerWithEmailPassword = async ({
     );
 
     const { uid, photoURL } = resp.user;
-    console.log(resp);
+
+    await updateProfile(FirebaseAuth.currentUser,{displayName});
 
     return {
       ok: true,
@@ -59,7 +61,7 @@ export const registerWithEmailPassword = async ({
 
     
   } catch (error) {
-    console.log("Error al registrar con email y contraseña", error.message);
-    return { ok: false, errorMessage: error.message };
+    // console.log("Error al registrar con email y contraseña", error.message);
+    return { ok: false, errorMessage: "El correo ya esta siendo usado" };
   }
 };
