@@ -1,28 +1,30 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Google } from "@mui/icons-material";
-import { Grid, Typography, TextField, Button, Link } from "@mui/material";
+import { Grid, Typography, TextField, Button, Link, Alert } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthLayout } from "../layout/AuthLayout";
 
+
 import { useForm } from "../../hooks/useForm";
-import { ckeckingAuthenticaction, startGoogleSignIn } from "../../store/auth";
+import {startGoogleSignIn, startLoginWhitEmailPassword} from "../../store/auth";
 
 export const LoginPages = () => {
-  const { status } = useSelector((state) => state.auth);
+
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const { email, password, onInputChange } = useForm({
-    email: "vladimir@correo.com",
-    password: "1234567",
+    email: "",
+    password: "",
   });
 
   const isAuthenticating = useMemo(() => status === "checking", [status]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(ckeckingAuthenticaction());
+    dispatch(startLoginWhitEmailPassword({ email, password}));
   };
 
   const onGoogleSignIn = () => {
@@ -61,9 +63,12 @@ export const LoginPages = () => {
               />
             </Grid>
 
-            {/*  Aquí va el botón de login y register */}
-            <Grid container spacing={2} sx={{ mb: 2, mt: "2rem" }}>
+            <Grid item xs={12} display={!!errorMessage ? "" : "none"} sx={{mb: 2, mt: 1}}>
+              <Alert severity="error"> {errorMessage} </Alert>
+            </Grid>
 
+            {/*  Aquí va el botón de login y register */}
+            <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={12} sm={6}>
                 <Button
                   disabled={isAuthenticating}
@@ -86,7 +91,6 @@ export const LoginPages = () => {
                   <Typography sx={{ ml: 1 }}>Google</Typography>
                 </Button>
               </Grid>
-              
             </Grid>
 
             <Grid container direction={"row"} justifyContent={"end"}>

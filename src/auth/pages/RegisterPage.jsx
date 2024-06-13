@@ -19,7 +19,6 @@ const formData = {
   name: "Tu nombre completo",
   email: "correo@correo.com",
   password: "123456",
-
   displayName: "Tu nombre completo",
 };
 

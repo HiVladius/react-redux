@@ -3,10 +3,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
 const googleProvider = new GoogleAuthProvider();
+
+//!-------------------Login with Google---------------------------
 
 export const singInWithGoogle = async () => {
   try {
@@ -32,13 +35,13 @@ export const singInWithGoogle = async () => {
   }
 };
 
+//!-------------------Register with email and password-------------------
 export const registerWithEmailPassword = async ({
   email,
   password,
   displayName,
 }) => {
   console.log(email, password, displayName);
-
 
   try {
     const resp = await createUserWithEmailAndPassword(
@@ -49,7 +52,7 @@ export const registerWithEmailPassword = async ({
 
     const { uid, photoURL } = resp.user;
 
-    await updateProfile(FirebaseAuth.currentUser,{displayName});
+    await updateProfile(FirebaseAuth.currentUser, { displayName });
 
     return {
       ok: true,
@@ -58,10 +61,41 @@ export const registerWithEmailPassword = async ({
       photoURL,
       uid,
     };
-
-    
   } catch (error) {
-    // console.log("Error al registrar con email y contraseña", error.message);
-    return { ok: false, errorMessage: "El correo ya esta siendo usado" };
+    console.log(error);
+    return { 
+      ok: false, 
+      errorMessage: 'El correo ya está en uso'
+    };
+  }
+};
+
+//!-------------------Login with email and password-------------------
+
+export const loginWithEmailPassword = async ({ email, password }) => {
+
+  try {
+    const resp = await signInWithEmailAndPassword(
+      FirebaseAuth,
+      email,
+      password
+    );
+
+    const { displayName, photoURL, uid } = resp.user;
+
+    return {
+      ok: true,
+      displayName,
+      photoURL,
+      uid,
+    };
+
+  
+  } catch (error) {
+    console.log(error)
+    return { 
+      ok: false, 
+      errorMessage: 'Email o contraseña incorrectos'
+    };
   }
 };
