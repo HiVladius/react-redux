@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+// import viteDeno from "https://deno.land/x/vite_deno_plugin/mod.ts";
 
 
 export default defineConfig(({ command, mode }) => {
@@ -14,5 +15,7 @@ export default defineConfig(({ command, mode }) => {
     
     // Plugins
     plugins: [react()],
+
+    // plugins:[viteDeno()]
   }
 })

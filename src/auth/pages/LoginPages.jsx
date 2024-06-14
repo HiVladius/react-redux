@@ -100,7 +100,7 @@ export const LoginPages = () => {
                 color={"inherit"}
                 sx={{ mt: 2 }}
               >
-                No tienes cuenta? Registrate
+              No tienes cuenta?
               </Link>
             </Grid>
           </Grid>
