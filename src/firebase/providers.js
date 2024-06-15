@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   updateProfile,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
@@ -98,4 +99,12 @@ export const loginWithEmailPassword = async ({ email, password }) => {
       errorMessage: 'Email o contraseña incorrectos'
     };
   }
+};
+
+
+//!-------------------Logout-------------------
+
+export const logoutFirebase = async () => {
+
+  return await FirebaseAuth.signOut( )
 };

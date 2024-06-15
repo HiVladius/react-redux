@@ -12,7 +12,13 @@ import {
   Grid,
 } from "@mui/material";
 
+import { useSelector } from "react-redux";
+
 export const SideBar = ({ draweWidth = 240 }) => {
+
+
+  const {displayName} = useSelector((state) => state.auth);
+
   return (
     <Box
       component="nav"
@@ -26,10 +32,9 @@ export const SideBar = ({ draweWidth = 240 }) => {
           "& .MuiDrawer-paper": { width: draweWidth, boxSizing: "border-box" },
         }}
       >
-        
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Vladimir Moreno
+            {displayName}
           </Typography>
         </Toolbar>
         <Divider />
@@ -50,8 +55,6 @@ export const SideBar = ({ draweWidth = 240 }) => {
             )
           )}
         </List>
-
-
       </Drawer>
     </Box>
   );

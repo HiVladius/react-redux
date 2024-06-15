@@ -1,16 +1,24 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Google } from "@mui/icons-material";
-import { Grid, Typography, TextField, Button, Link, Alert } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Alert,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthLayout } from "../layout/AuthLayout";
 
-
 import { useForm } from "../../hooks/useForm";
-import {startGoogleSignIn, startLoginWhitEmailPassword} from "../../store/auth";
+import {
+  startGoogleSignIn,
+  startLoginWhitEmailPassword,
+} from "../../store/auth";
 
 export const LoginPages = () => {
-
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -24,7 +32,7 @@ export const LoginPages = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(startLoginWhitEmailPassword({ email, password}));
+    dispatch(startLoginWhitEmailPassword({ email, password }));
   };
 
   const onGoogleSignIn = () => {
@@ -35,7 +43,10 @@ export const LoginPages = () => {
   return (
     <>
       <AuthLayout title="Login✍️ ">
-        <form onSubmit={onSubmit}>
+        <form
+          onSubmit={onSubmit}
+          className="animate__animated animate__fadeIn animate__faster"
+        >
           <Grid container>
             {/* Aquí van los campos de texto */}
 
@@ -63,7 +74,12 @@ export const LoginPages = () => {
               />
             </Grid>
 
-            <Grid item xs={12} display={!!errorMessage ? "" : "none"} sx={{mb: 2, mt: 1}}>
+            <Grid
+              item
+              xs={12}
+              display={!!errorMessage ? "" : "none"}
+              sx={{ mb: 2, mt: 1 }}
+            >
               <Alert severity="error"> {errorMessage} </Alert>
             </Grid>
 
@@ -100,7 +116,7 @@ export const LoginPages = () => {
                 color={"inherit"}
                 sx={{ mt: 2 }}
               >
-              No tienes cuenta?
+                No tienes cuenta?
               </Link>
             </Grid>
           </Grid>

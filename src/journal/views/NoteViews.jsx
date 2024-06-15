@@ -8,6 +8,7 @@ const fecha = hoy.setMonth(hoy.getMonth() + 1);
 export const NoteViews = () => {
   return (
     <Grid
+      className="animate__animated animate__fadeIn animate__faster"
       container
       direction={"row"}
       justifyContent={"space-between"}
@@ -42,11 +43,9 @@ export const NoteViews = () => {
           placeholder="Que hay de nuevo hoy?"
           minRows={5}
         />
-
       </Grid>
 
-        <ImageGalery />
-
+      <ImageGalery />
     </Grid>
   );
 };
