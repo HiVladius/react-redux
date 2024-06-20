@@ -8,6 +8,10 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     createValidators();
   }, [formState]);
 
+  useEffect(() => {
+    setFormState(initialForm);
+  }, [initialForm]);
+
   //? isFormValid es una variable que se calcula cada vez que se actualiza
   const isFormValid = useMemo(() => {
     for (const formValue of Object.keys(formValidation)) {

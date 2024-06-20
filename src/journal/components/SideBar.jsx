@@ -1,7 +1,7 @@
 import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material";
 
 import { useSelector } from "react-redux";
-import { SidebarItem } from "./SidebarItem";
+import { SidebarItem } from "./";
 
 export const SideBar = ({ draweWidth = 240 }) => {
   const { displayName } = useSelector((state) => state.auth);
@@ -14,10 +14,10 @@ export const SideBar = ({ draweWidth = 240 }) => {
     >
       <Drawer
         variant="permanent"
-        open={false}
+        open
         sx={{
-          display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": { width: draweWidth, boxSizing: "border-box" },
+          display: { xs: "block" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: draweWidth },
         }}
       >
         <Toolbar>

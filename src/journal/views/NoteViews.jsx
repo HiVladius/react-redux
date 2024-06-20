@@ -1,11 +1,41 @@
-import { SaveOutlined } from "@mui/icons-material";
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import { SaveOutlined } from "@mui/icons-material";
+
+import { useForm } from "../../hooks";
 import { ImageGalery } from "../components/ImageGalery";
+import { setActiveNote, startSaveNote } from "../../store/journal";
+
 
 const hoy = new Date();
 const fecha = hoy.setMonth(hoy.getMonth() + 1);
 
 export const NoteViews = () => {
+
+const dispatch = useDispatch();
+
+  const { active: note } = useSelector((state) => state.journal);
+
+  const { body, title, date, onInputChange, formState } = useForm(note);
+
+  const dataString = useMemo(() => {
+    const newDate = new Date(date);
+    return newDate.toLocaleDateString(
+      "es-ES",
+      { weekday: "long", year: "numeric", month: "long", day: "numeric" },
+    );
+  }, [date]);
+
+  useEffect(() => {
+      dispatch(setActiveNote(formState));
+
+  }, [formState]);
+
+  const onSaveNote = () =>{
+    dispatch(startSaveNote())
+  }
+
   return (
     <Grid
       className="animate__animated animate__fadeIn animate__faster"
@@ -14,12 +44,18 @@ export const NoteViews = () => {
       justifyContent={"space-between"}
       sx={{ mb: 1 }}
     >
-      <Typography fontSize={39} fontWeight={"light"}>
-        Notas
-      </Typography>
+      <Grid item>
+        <Typography
+          fontSize={dataString.length > 10 ? 20: 40}
+          fontWeight="light"
+          // component={dataString.length > 10 ? "h6" : "h3"} // Add component prop
+        >
+          {dataString}
+        </Typography>
+      </Grid>
 
       <Grid item>
-        <Button color="secondary" sx={{ padding: 2 }}>
+        <Button onClick={onSaveNote} color="secondary" sx={{ padding: 2 }}>
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </Button>
@@ -33,6 +69,9 @@ export const NoteViews = () => {
           label="Título de la nota"
           placeholder="Ingrese el título de la nota"
           sx={{ mb: 1, border: "none" }}
+          name="title"
+          value={title}
+          onChange={onInputChange}
         />
 
         <TextField
@@ -42,6 +81,9 @@ export const NoteViews = () => {
           multiline
           placeholder="Que hay de nuevo hoy?"
           minRows={5}
+          name="body"
+          value={body}
+          onChange={onInputChange}
         />
       </Grid>
 
