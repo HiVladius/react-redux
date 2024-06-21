@@ -1,40 +1,54 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Snackbar, TextField, Typography } from "@mui/material";
 import { SaveOutlined } from "@mui/icons-material";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css';
 
 import { useForm } from "../../hooks";
 import { ImageGalery } from "../components/ImageGalery";
 import { setActiveNote, startSaveNote } from "../../store/journal";
 
 
-const hoy = new Date();
-const fecha = hoy.setMonth(hoy.getMonth() + 1);
+
 
 export const NoteViews = () => {
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
-
-  const { active: note } = useSelector((state) => state.journal);
+  const { active: note, messageSave, isSaving } = useSelector((state) => state.journal);
 
   const { body, title, date, onInputChange, formState } = useForm(note);
 
   const dataString = useMemo(() => {
     const newDate = new Date(date);
-    return newDate.toLocaleDateString(
-      "es-ES",
-      { weekday: "long", year: "numeric", month: "long", day: "numeric" },
-    );
+    return newDate.toLocaleDateString("es-ES", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    });
   }, [date]);
 
   useEffect(() => {
-      dispatch(setActiveNote(formState));
-
+    dispatch(setActiveNote(formState));
   }, [formState]);
 
-  const onSaveNote = () =>{
-    dispatch(startSaveNote())
-  }
+  useEffect(() => {
+    if (messageSave.length > 0) {
+      Swal.fire({
+        title: "Nota actualizada!",
+        text: messageSave,
+        icon: "success",
+        showConfirmButton: true,
+        timer: 5000,
+      });
+    }
+  }, [messageSave]);
+
+  const onSaveNote = () => {
+    dispatch(startSaveNote());
+  };
 
   return (
     <Grid
@@ -46,7 +60,7 @@ const dispatch = useDispatch();
     >
       <Grid item>
         <Typography
-          fontSize={dataString.length > 10 ? 20: 40}
+          fontSize={dataString.length > 10 ? 20 : 40}
           fontWeight="light"
           // component={dataString.length > 10 ? "h6" : "h3"} // Add component prop
         >
@@ -55,7 +69,7 @@ const dispatch = useDispatch();
       </Grid>
 
       <Grid item>
-        <Button onClick={onSaveNote} color="secondary" sx={{ padding: 2 }}>
+        <Button disable={isSaving} onClick={onSaveNote} color="secondary" sx={{ padding: 2 }}>
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </Button>

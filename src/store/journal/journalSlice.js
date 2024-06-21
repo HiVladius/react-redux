@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const journalSlice = createSlice({
   name: "journal",
   initialState: {
@@ -13,28 +12,27 @@ export const journalSlice = createSlice({
   },
 
   reducers: {
-    //TODO: evitar que se pueda guardar una nota vacia
     savingNewNote: (state) => {
-        state.isSaving = true;
+      state.isSaving = true;
     },
 
     addNewEmptyNote: (state, action) => {
-        state.notes = [...state.notes, action.payload];
-        state.isSaving = false;
+      state.notes = [...state.notes, action.payload];
+      state.isSaving = false;
     },
 
     setActiveNote: (state, action) => {
-        state.active = action.payload;
+      state.active = action.payload;
+      state.messageSave = "";
     },
 
     setNotes: (state, action) => {
-        state.notes = action.payload;
+      state.notes = action.payload;
     },
 
     setSaving: (state) => {
-        state.isSaving = true;
-
-        //TODO: Agregar un mensaje de error
+      state.isSaving = true;
+      state.messageSave = "";
     },
 
     noteUpdate: (state, action) => {
@@ -43,7 +41,7 @@ export const journalSlice = createSlice({
         note.id === action.payload.id ? action.payload : note
       );
 
-      //TODO: Mostrar mensaje de actualizacion
+      state.messageSave = `${action.payload.title} ha sido actualizado`;
     },
 
     deleteNote: (state, action) => {},
