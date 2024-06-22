@@ -15,7 +15,7 @@ import "sweetalert2/dist/sweetalert2.css";
 
 import { useForm } from "../../hooks";
 import { ImageGalery } from "../components/ImageGalery";
-import { setActiveNote, startSaveNote } from "../../store/journal";
+import { setActiveNote, startSaveNote, startUploadingImage } from "../../store/journal";
 
 export const NoteViews = () => {
   const dispatch = useDispatch();
@@ -63,9 +63,9 @@ export const NoteViews = () => {
 
   const onFileInputChange = ({ target }) => {
     if (target.files === 0) return;
-    console.log("Subiendo archivo...", target.files);
-    // const file = target.files[0];
-    // console.log(file);
+   
+    dispatch(startUploadingImage(target.files));
+    
   };
 
   return (
