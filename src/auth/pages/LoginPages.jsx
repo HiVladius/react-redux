@@ -41,7 +41,7 @@ export const LoginPages = () => {
   };
 
   const onGoogleSignIn = () => {
-    console.log("Google Sign In");
+    
     dispatch(startGoogleSignIn());
   };
 
@@ -105,7 +105,7 @@ export const LoginPages = () => {
 
               <Grid item xs={12} sm={6}>
                 <Button
-                  disabled={isAuthenticating}
+                  disabled={isAuthenticating ? true : undefined}
                   onClick={onGoogleSignIn}
                   variant="contained"
                   fullWidth

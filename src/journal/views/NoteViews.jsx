@@ -4,18 +4,20 @@ import {
   Button,
   Grid,
   IconButton,
-  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { SaveOutlined } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
 
 import { useForm } from "../../hooks";
 import { ImageGalery } from "../components/ImageGalery";
-import { setActiveNote, startSaveNote, startUploadingImage } from "../../store/journal";
+import { setActiveNote, startDeleteNote, startSaveNote, startUploadingImage,  } from "../../store/journal";
+
+
 
 export const NoteViews = () => {
   const dispatch = useDispatch();
@@ -68,6 +70,13 @@ export const NoteViews = () => {
     
   };
 
+  const onDelete = () => {
+    
+    dispatch( startDeleteNote() )
+
+  }
+
+
   return (
     <Grid
       className="animate__animated animate__fadeIn animate__faster"
@@ -101,6 +110,7 @@ export const NoteViews = () => {
           onClick={() => fileInputRef.current.click()}
         >
           <AddAPhotoIcon />
+          
         </IconButton>
 
         <Button
@@ -140,7 +150,18 @@ export const NoteViews = () => {
         />
       </Grid>
 
-      <ImageGalery />
+      <Grid container justifyContent='end'>
+        
+          <Button 
+            onClick={onDelete}
+          >
+            <DeleteIcon/>
+            Delete Note
+          </Button>
+       
+      </Grid>
+
+      <ImageGalery images={note.imageUrls} />
     </Grid>
   );
 };

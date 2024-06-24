@@ -1,5 +1,6 @@
 import { registerWithEmailPassword, singInWithGoogle, loginWithEmailPassword, logoutFirebase } from "../../firebase/providers/";
 import { checkingCredentials, logout, login } from "./";
+import { clearNoteLogout } from "../journal";
 
 
 export const ckeckingAuthenticaction = (email, password) => {
@@ -50,6 +51,7 @@ export const startLoginWhitEmailPassword = ({email, password}) => {
 export const startLogout = () => {
   return async (dispatch) => {
     await logoutFirebase();
+    dispatch(clearNoteLogout());
     dispatch(logout({errorMessage: 'No hay usuario logueado'}));
   };
 };
