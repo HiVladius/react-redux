@@ -2,22 +2,17 @@ import { ImageList, ImageListItem } from "@mui/material";
 
 export const ImageGalery = ({ images }) => {
   return (
-    <ImageList
-      sx={{ width: 500, height: 450 }}
-      variant="woven"
-      cols={5}
-      gap={8}
-    >
-      {images.map((image) => (
-        <ImageListItem key={image}>
-          <img
-            srcSet={`${image}?w=161&fit=crop&auto=format&dpr=2 2x`}
-            src={`${image}?w=161&fit=crop&auto=format`}
-            alt="imagen de la nota"
-            loading="lazy"
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+    <ImageList sx={{ width: '100%', height: 500 }} cols={4} rowHeight={200}>
+    { Array.isArray(images) ? images.map((image) => ( // Verifica que images sea un arreglo
+      <ImageListItem key={image}>
+        <img
+          src={`${image}?w=164&h=164&fit=crop&auto=format`}
+          srcSet={`${image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+          alt="Imagen de la nota"
+          loading="lazy"
+        />
+      </ImageListItem>
+    )) : null}
+  </ImageList>
   );
-};
+}
