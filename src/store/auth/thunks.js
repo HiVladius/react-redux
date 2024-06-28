@@ -3,7 +3,7 @@ import { checkingCredentials, logout, login } from "./";
 import { clearNoteLogout } from "../journal";
 
 
-export const ckeckingAuthenticaction = (email, password) => {
+export const ckeckingAuthenticaction = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
   };
