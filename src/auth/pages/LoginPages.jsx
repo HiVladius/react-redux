@@ -18,7 +18,7 @@ import {
   startLoginWhitEmailPassword,
 } from "../../store/auth";
 
-import { Version } from "../../Version";
+
 
 
 const formData ={
