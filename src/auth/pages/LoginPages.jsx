@@ -129,7 +129,7 @@ export const LoginPages = () => {
           </Grid>
         </form>
         <Typography variant="caption" sx={{ mt: 2 }}>
-          {Version}
+         
         </Typography>
       </AuthLayout>
     </>

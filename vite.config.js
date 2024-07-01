@@ -19,7 +19,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: [react()],
 
     test:{
-      testMatch: ['**/*.test.js'],
+      testMatch: ['**/*.test.js', '**/*.test.jsx', '**/*.test.ts', '**/*.test.tsx'],
       transform: {
         '^.+\\.jsx?$': 'esbuild-jest',
       },
