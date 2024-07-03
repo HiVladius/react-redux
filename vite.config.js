@@ -13,6 +13,7 @@ export default defineConfig(({ command, mode }) => {
       'import.meta.env.VITE_APPID': JSON.stringify(env.VITE_APPID),
       'import.meta.env.VITE_APISECRET': JSON.stringify(env.VITE_APISECRET),
       'import.meta.env.VITE_API_KEY_CLOUDINARY': JSON.stringify(env.VITE_API_KEY_CLOUDINARY),
+      'import.meta.env.VITE_API_KEY_FIREBASE_TESTING': JSON.stringify(env.VITE_API_KEY_FIREBASE_TESTING)
     },
     
     // Plugins
