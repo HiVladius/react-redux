@@ -24,6 +24,8 @@ export default defineConfig(({ command, mode }) => {
       transform: {
         '^.+\\.jsx?$': 'esbuild-jest',
       },
+      environment: 'jsdom',
+      
     }
 
   }

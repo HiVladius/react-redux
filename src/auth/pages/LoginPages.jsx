@@ -18,10 +18,7 @@ import {
   startLoginWhitEmailPassword,
 } from "../../store/auth";
 
-
-
-
-const formData ={
+const formData = {
   email: "",
   password: "",
 };
@@ -30,7 +27,6 @@ export const LoginPages = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-
   const { email, password, onInputChange } = useForm(formData);
 
   const isAuthenticating = useMemo(() => status === "checking", [status]);
@@ -41,15 +37,13 @@ export const LoginPages = () => {
   };
 
   const onGoogleSignIn = () => {
-    
+    console.log('onGoogleSignIn');
     dispatch(startGoogleSignIn());
   };
 
   return (
     <>
-   
       <AuthLayout title="Login✍️ ">
-      
         <form
           onSubmit={onSubmit}
           className="animate__animated animate__fadeIn animate__faster"
@@ -107,6 +101,7 @@ export const LoginPages = () => {
                 <Button
                   disabled={isAuthenticating ? true : undefined}
                   onClick={onGoogleSignIn}
+                  data-testid="google-button"
                   variant="contained"
                   fullWidth
                 >
@@ -128,9 +123,7 @@ export const LoginPages = () => {
             </Grid>
           </Grid>
         </form>
-        <Typography variant="caption" sx={{ mt: 2 }}>
-         
-        </Typography>
+        <Typography variant="caption" sx={{ mt: 2 }}></Typography>
       </AuthLayout>
     </>
   );
