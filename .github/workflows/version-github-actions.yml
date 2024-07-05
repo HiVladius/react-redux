@@ -1,0 +1,16 @@
+name: Version GitHub Actions
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Start project
+              run: npm run dev
+            - name: Start Testing
+              run: npm run test
