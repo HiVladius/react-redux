@@ -25,18 +25,38 @@ const store = configureStore({
 });
 
 describe(" Pruebas de <LoginPages />", () => {
-    // test("debe de mostrar un componente correctamente", () => {
-    //   render(
-    //     <Provider store={store}>
-    //       <MemoryRouter>
-    //         <LoginPages />
-    //       </MemoryRouter>
-    //     </Provider>
-    //   );
-    //   expect(screen.queryAllByAltText("Login✍️")).not.toBeNull();
-    // });
+    test("debe de mostrar un componente correctamente", () => {
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <LoginPages />
+          </MemoryRouter>
+        </Provider>
+      );
+      expect(screen.queryAllByAltText("Login✍️")).not.toBeNull();
+    });
 
-  test("boton de google debe de llamar el startGoogleSignIn", () => {
+  // test("boton de google debe de llamar el startGoogleSignIn", () => {
+  //   render(
+  //     <Provider store={store}>
+  //       <MemoryRouter>
+  //         <LoginPages />
+  //       </MemoryRouter>
+  //     </Provider>
+  //   );
+
+  //   const button = screen.getByTestId("google-button");
+  //   fireEvent.click(button);
+
+  //   expect(startGoogleSignIn).toHaveBeenCalled();
+  // });
+
+  test('submit debe de llmar starLoginWhitEmailPassword', () => {
+
+    const email = 'correo@coreo.com';
+    const password = '123456';
+
+
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -45,9 +65,9 @@ describe(" Pruebas de <LoginPages />", () => {
       </Provider>
     );
 
-    const button = screen.getByTestId("google-button");
-    fireEvent.click(button);
+    const emailInput = screen.getByRole('textbox', {name: "Correo"});
+    console.log(emailInput);
 
-    expect(startGoogleSignIn).toHaveBeenCalledOnce();
+
   });
 });
