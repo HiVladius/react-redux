@@ -1,0 +1,17 @@
+name: Notificar cambio en rama main
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+
+    steps:
+        
+        - name: Telegram Notification
+          uses: haishanh/actions-telegram-notification@v1
+          if: ${{ always() }}
+          with:
+            notification-token: ${{ secrets.NOTIFICATION_TOKEN }}
